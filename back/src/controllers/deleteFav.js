@@ -4,10 +4,10 @@ const deleteFav = async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Eliminar el personaje de favoritos
+    
     await FavoriteModel.destroy({ where: { id } });
 
-    // Buscar todos los personajes favoritos y responder con ese arreglo
+  
     const favorites = await FavoriteModel.findAll();
     res.json(favorites);
   } catch (error) {
