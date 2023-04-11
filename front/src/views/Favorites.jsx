@@ -1,21 +1,26 @@
-import Card from "../components/Card"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector} from "react-redux";
+import { getFavorites } from "../redux/actions";
+import Card from "../components/cards/Card"
+import { useEffect } from "react";
 
-const Favorites =({id,name,gender,species,image,onClose})=>{
-  const favorites= useSelector(state=>state.myFavorites)
-  return(
+function Favorites() {
+  const favorites= useSelector((state)=>state.myFavorites)
 
-  <>
-  {favorites.map((fav)=>{
-    return <Card
+  return (
+    <>
+  {favorites.map(({id,name,gender,species,image})=>{
+    return( 
+    <Card
+    key={id}
     id={id}
     name={name}
     species={species}
     gender={gender}
     image={image}
-    onClose={onClose}/>
+    />
+    )
   })}
   </>
-)}
-
+  )
+}
 export default Favorites

@@ -5,7 +5,7 @@ import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import Detail from "../views/Detail";
 import About from "../views/about";
-import Cards from "../components/Cards";
+import Cards from "../components/cards/Cards";
 import Form from "../components/form/Form";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";

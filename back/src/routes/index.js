@@ -1,26 +1,31 @@
-const {Router}= require("express")
-const getCharById = require("../controllers/getCharById")
-const getCharDetail = require("../controllers/getCharDetail")
-const favs = require("../utils/favs")
-
+const { Router } = require("express");
+const getCharById = require("../controllers/getCharById");
+const getCharDetail = require("../controllers/getCharDetail");
+const { login } = require("../controllers/login");
+const { postFav } = require("../controllers/postFav");
+const { deleteFav } = require("../controllers/deleteFav");
+const { postUser } = require("../controllers/postUser");
 const router = Router();
 
-router.get("/rickandmorty/onsearch/:id",getCharById)
-router.get("/rickandmorty/detail/:id", getCharDetail)
+router.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+  );
+  next();
+});
 
-router.post("/rickandmorty/fav",(req,res)=>{
-  favs.push(req.body)
-  res.status(200).json({fav:OK})
-})
+router.get("/rickandmorty/onsearch/:id", getCharById);
+router.get("/rickandmorty/detail/:id", getCharDetail);
 
+router.route("/rickandmorty/auth/login").get(login).post(postUser);
 
-router.get("/rickandmorty/fav", (req,res)=>{
-  res.status(200).json(favs)
-})
+router.post("/rickandmorty/fav", postFav);
+router.delete("/rickandmorty/fav/:id", deleteFav);
 
-router.delete("/rickandmorty/fav/:id",(req,res)=>{
-const {id}= req.params
-favs= favs.filter((fav)=> id!==Number(fav.id))
-res.status(200).json({fav:ELIMINADO})
-})
-module.exports = router
+module.exports = router;
